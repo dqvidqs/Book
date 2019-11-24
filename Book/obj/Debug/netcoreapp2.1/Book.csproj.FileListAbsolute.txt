@@ -1,0 +1,14 @@
+C:\MyFiles\MyProjects\web\Book\Book\bin\Debug\netcoreapp2.1\Book.deps.json
+C:\MyFiles\MyProjects\web\Book\Book\bin\Debug\netcoreapp2.1\Book.runtimeconfig.json
+C:\MyFiles\MyProjects\web\Book\Book\bin\Debug\netcoreapp2.1\Book.runtimeconfig.dev.json
+C:\MyFiles\MyProjects\web\Book\Book\bin\Debug\netcoreapp2.1\Book.dll
+C:\MyFiles\MyProjects\web\Book\Book\bin\Debug\netcoreapp2.1\Book.pdb
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.csprojAssemblyReference.cache
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.csproj.CoreCompileInputs.cache
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.RazorAssemblyInfo.cache
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.RazorAssemblyInfo.cs
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.AssemblyInfoInputs.cache
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.AssemblyInfo.cs
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.RazorTargetAssemblyInfo.cache
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.dll
+C:\MyFiles\MyProjects\web\Book\Book\obj\Debug\netcoreapp2.1\Book.pdb
