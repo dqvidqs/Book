@@ -6,6 +6,7 @@ using BookAPI.Data;
 using BookAPI.Models;
 using BookAPI.Auth;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookAPI.Controllers
 {
@@ -25,14 +26,35 @@ namespace BookAPI.Controllers
         [HttpGet]
         public IEnumerable<Book> GetMyOrders()
         {
-            string id = getUserId();
-
             var mybooks = (from b in _context.Books
                            join o in _context.Orders
                            on b.id equals o.book.id
-                           where o.user.id == Convert.ToInt32(id)
+                           where o.user.id == getUserId()
                            select b).ToArray();
             return mybooks;
+        }
+        [Route("api/myorders/{id}")]
+        [HttpGet]
+        public IActionResult GetMyBook([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var mybook = (from b in _context.Books
+                           join o in _context.Orders
+                           on b.id equals o.book.id
+                           where o.user.id == getUserId()
+                           where b.id == id
+                           select b).FirstOrDefault();
+
+            if (mybook == null)
+            {
+                return NotFound();
+            }
+            return Ok(mybook);
+            //return mybooks;
         }
         [Authorize(Roles.WORKER, Roles.CUSTOMER)]
         // GET: api/myorders
@@ -44,23 +66,32 @@ namespace BookAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            string StringUserID = getUserId();
             int id = orderingBook.book_id;
             OrderBook order = new OrderBook();
             order.book = _context.Books.Find(id);
-            id = Convert.ToInt32(StringUserID);
+            id = getUserId();
             order.user = _context.Users.Find(id);
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            if (order.book != null || order.user != null)
+            {
+                _context.Orders.Add(order);
+                _context.SaveChanges();
+            }
+            else
+            {
+                NotFound();
+            }
 
-            return CreatedAtAction("Get Orders", new { id = order.id }, order);
+            return Json(new
+            {
+                value = order.book
+            });
         }
         [NonAction]
-        public string getUserId()
+        public int getUserId()
         {
             var identity = (ClaimsIdentity)User.Identity;
             IEnumerable<Claim> claims = identity.Claims;
-            return claims.ElementAt(1).Value;
+            return Convert.ToInt32(claims.ElementAt(1).Value);
 
         }
         [Route("api/myorders/{id}")]

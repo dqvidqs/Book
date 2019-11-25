@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BookAPI.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -22,7 +22,7 @@ namespace BookAPI.Controllers
             this.configuration = configuration;
             tokenProvider = new TokenProvider(configuration);
         }
-        [Route("register")]
+        [Route("api/register")]
         [HttpPost]
         public IActionResult Store([FromBody] Register model)
         {
@@ -50,7 +50,7 @@ namespace BookAPI.Controllers
                 value = user,
             });
         }
-        [Route("login")]
+        [Route("api/login")]
         [HttpPost]
         public IActionResult LoginUser([FromBody] Login model)
         {
@@ -79,7 +79,7 @@ namespace BookAPI.Controllers
                 value = userToken,
             });
         }
-        [Route("home")]
+        [Route("api/home")]
         [HttpGet]
         public IActionResult Home()
         {
@@ -88,7 +88,7 @@ namespace BookAPI.Controllers
                 value = "Home",
             });
         }
-        [Route("permission")]
+        [Route("api/permission")]
         [HttpGet]
         public IActionResult NoPer()
         {
