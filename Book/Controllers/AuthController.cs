@@ -62,7 +62,7 @@ namespace BookAPI.Controllers
                     value = "User does not exist",
                 });
             }
-            if (tokenProvider.Verify(User.password,model.password))
+            if (!tokenProvider.Verify(User.password,model.password))
             {
                 return Json(new
                 {

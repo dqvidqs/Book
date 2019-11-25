@@ -89,8 +89,13 @@ namespace BookAPI.Auth
             {
                 buffer4 = bytes.GetBytes(0x20);
             }
+            int i = 0;
             //return ByteArraysEqual(buffer3, buffer4);
-            return ReferenceEquals(buffer3, buffer4);
+            foreach(byte a in buffer4)
+            {
+                if (buffer3[i++] != a) { return false; }
+            }
+            return true;
         }
     }
 }
