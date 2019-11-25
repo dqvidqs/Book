@@ -36,18 +36,20 @@ namespace BookAPI.Controllers
         }
         [Authorize(Roles.WORKER, Roles.CUSTOMER)]
         // GET: api/myorders
-        [Route("api/myorders/{id}")]
+        [Route("api/myorders")]
         [HttpPost]
-        public IActionResult PostOrder([FromRoute] int id)
+        public IActionResult PostOrder([FromBody] PostOrderBook orderingBook)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            OrderBook order = new OrderBook();
             string StringUserID = getUserId();
-            order.book = _context.Books.Find(Convert.ToInt32(id));
-            order.user = _context.Users.Find(Convert.ToInt32(StringUserID));
+            int id = orderingBook.book_id;
+            OrderBook order = new OrderBook();
+            order.book = _context.Books.Find(id);
+            id = Convert.ToInt32(StringUserID);
+            order.user = _context.Users.Find(id);
             _context.Orders.Add(order);
             _context.SaveChanges();
 

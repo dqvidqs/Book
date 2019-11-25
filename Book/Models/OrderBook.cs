@@ -10,4 +10,8 @@ namespace BookAPI.Models
         public virtual User user { get; set; }
         public virtual Book book { get; set; }
     }
+    public class PostOrderBook
+    {
+        public int book_id { get; set; }
+    }
 }
