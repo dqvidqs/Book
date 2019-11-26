@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookAPI
 {
@@ -28,7 +29,7 @@ namespace BookAPI
                 x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(60);
+                options.IdleTimeout = TimeSpan.FromMinutes(Convert.ToDouble(Configuration["Jwt:ExpiryInMinutes"]));
             });
 
             services.AddAuthentication(auth =>
@@ -49,7 +50,7 @@ namespace BookAPI
                     ValidateAudience = true,
                     ValidAudience = Configuration["Jwt:Site"],
                     //RequireExpirationTime = true,
-                    //ValidateLifetime = true,
+                    ValidateLifetime = true,
                     //ClockSkew = TimeSpan.Zero
                 };
             });
@@ -73,12 +74,11 @@ namespace BookAPI
             app.UseAuthentication();
             app.Use(async (context, next) =>
             {
-
                 var JWToken = context.Session.GetString("JWToken");
                 
                 /*if (!string.IsNullOrEmpty(JWToken))
                 {
-                    context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
+                    context.Response.Headers.Add("Bearer Token", JWToken);
                 }*/
 
                 await next();

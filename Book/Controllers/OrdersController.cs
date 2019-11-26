@@ -22,18 +22,21 @@ namespace BookAPI.Controllers
 
         [Authorize(Roles.WORKER, Roles.CUSTOMER)]
         // GET: api/myorders
-        [Route("api/myorders")]
+        [Route("api/orders")]
         [HttpGet]
-        public IEnumerable<Book> GetMyOrders()
+        public IActionResult GetMyOrders()
         {
             var mybooks = (from b in _context.Books
                            join o in _context.Orders
                            on b.id equals o.book.id
                            where o.user.id == getUserId()
                            select b).ToArray();
-            return mybooks;
+            return Json(new
+            {
+                value = mybooks
+            });
         }
-        [Route("api/myorders/{id}")]
+        [Route("api/orders/{id}")]
         [HttpGet]
         public IActionResult GetMyBook([FromRoute] int id)
         {
@@ -53,12 +56,15 @@ namespace BookAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(mybook);
+            return Json(new
+            {
+                value = mybook,
+            });
             //return mybooks;
         }
         [Authorize(Roles.WORKER, Roles.CUSTOMER)]
         // GET: api/myorders
-        [Route("api/myorders")]
+        [Route("api/orders")]
         [HttpPost]
         public IActionResult PostOrder([FromBody] PostOrderBook orderingBook)
         {
@@ -94,7 +100,7 @@ namespace BookAPI.Controllers
             return Convert.ToInt32(claims.ElementAt(1).Value);
 
         }
-        [Route("api/myorders/{id}")]
+        [Route("api/orders/{id}")]
         [HttpDelete]
         [Authorize(Roles.WORKER, Roles.CUSTOMER)]
         public IActionResult DeleteOrder([FromRoute] int id)

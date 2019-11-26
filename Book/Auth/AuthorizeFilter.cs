@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
+using System.Collections.Generic;
+using System;
 
 namespace BookAPI.Auth
 {
